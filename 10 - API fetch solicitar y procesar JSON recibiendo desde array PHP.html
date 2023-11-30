@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>10- API fetch AJAX solicitar y procesar JSON recibiendo desde array PHP</title>
+<meta nombre="viewport" content="width=device-width, initial-scale=1">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">	
+<style>
+.container {
+width: 400px;
+}
+</style>
+</head>
+<body>
+<div class="container">
+<div class="card" style="width: 400px">
+  <img class="card-img-top" src="" id="foto">
+  <div class="card-body">
+    <h5 class="card-title" id="nombre"></h5>
+    <p class="card-text" id="grupo"></p>
+  </div>
+</div> 
+</div>  
+<script>
+//estructura fetch en forma compacta
+fetch('vocalista.php').then(response => 
+    //response.json() genera una promesa que en caso de resolverse positivamente entrega los datos como JSON
+	response.json().then(data => ({
+           datos: data 
+    })
+	//si se resuelve positivamente la promesa de response.json()
+).then(texto => {
+	//Manipular el DOM
+	document.getElementById('foto').src = texto.datos.foto;
+	document.getElementById('nombre').innerHTML = texto.datos.nombre;
+	document.getElementById('grupo').innerHTML = texto.datos.grupo;
+}));
+</script>
+</body>
+</html>

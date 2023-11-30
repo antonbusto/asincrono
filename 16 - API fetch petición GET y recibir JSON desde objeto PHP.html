@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<title>16 - API fetch petición GET y recibir JSON desde objeto PHP</title>
+<meta charset="UTF-8">
+<meta nombre="viewport" content="width=device-width, initial-scale=1">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<style>
+.container {
+width: 750px;
+}
+</style>
+</head>
+<body>
+<div class="container">
+<div class="card" style="width: 18rem;">
+  <img class="card-img-top" src="" alt="Card image cap" id="foto">
+  <div class="card-body">
+    <h5 class="card-title" id="nombre"></h5>
+    <p class="card-text" id="puesto"></p>
+  </div>
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item" id="genero"></li>
+    <li class="list-group-item" id="nacimiento"></li>
+	<li class="list-group-item" id="fallecimiento"></li>
+  </ul>
+</div> 
+</div>  
+<script>
+/* código que realiza una solicitud a un archivo PHP que devuelve un objeto JSON. Después, muestra la información de la persona contenida en el objeto en diferentes elementos HTML de la página */
+fetch("ajax-objeto-php.php") // Realiza una solicitud a "ajax-objeto-php.php"
+  .then(response => {
+    if (!response.ok) { // Si la respuesta no es exitosa
+      throw new Error('Error en la solicitud'); // Lanza un error
+    }
+    return response.json(); // Convierte la respuesta a JSON y la devuelve
+  })
+  .then(persona => {
+    // Selecciona elementos del HTML y asigna los valores del objeto "persona" a ellos
+    document.getElementById("nombre").innerHTML = persona.nombre;
+    document.getElementById("puesto").innerHTML = persona.puesto;
+    document.getElementById("genero").innerHTML = persona.genero;
+    document.getElementById("nacimiento").innerHTML = persona.nacimiento;
+    document.getElementById("fallecimiento").innerHTML = persona.fallecimiento;
+    document.getElementById("foto").src = persona.foto;
+  })
+  .catch(error => {
+    console.error(error); // Muestra el error en la consola
+  });
+
+</script>
+</body>
+</html>

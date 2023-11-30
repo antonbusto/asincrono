@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejemplo de conexión a la Imagen del día (NASA API)</title>
+</head>
+<body>
+<!-- Una API (Interfaz de Programación de Aplicaciones) es un conjunto de reglas y protocolos que permite que diferentes aplicaciones informáticas se comuniquen entre sí. Proporciona una forma estructurada para que los programas soliciten y compartan datos o funcionalidades, facilitando la integración y la interoperabilidad entre sistemas de software -->
+    <h1>Imagen astronómica del Día</h1>
+    <img id="imagen-astronomica" src="" alt="Imagen Astronómica del Día">
+    <p id="descripcion-astronomica"></p>
+
+    <script>
+        // URL de la API APOD de la NASA
+        const apiUrl = 'https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY'; /* DEMO_KEY, es válida para propósitos de demostración, pero si planeas usarla en un proyecto real, deberías obtener tu propia clave API siguiendo las instrucciones en el sitio web de la NASA (https://api.nasa.gov/). Simplemente reemplaza 'DEMO_KEY' con tu propia clave en la URL de la API. */
+
+        // Obtener referencias a elementos HTML
+        const imagenAstronomica = document.getElementById('imagen-astronomica');
+        const descripcionAstronomica = document.getElementById('descripcion-astronomica');
+
+        // Función para obtener la imagen astronómica del día
+        function obtenerImagenAstronomica() {
+            // Realizar una solicitud GET a la API APOD
+            fetch(apiUrl)
+                .then(response => response.json())
+                .then(data => {
+                    // Mostrar la imagen y la descripción en la página
+                    imagenAstronomica.src = data.url;
+                    descripcionAstronomica.textContent = data.title + ': ' + data.explanation;
+                })
+                .catch(error => {
+                    console.error('Error en la solicitud:', error);
+                });
+        }
+
+        // Llamar a la función para obtener la imagen astronómica
+        obtenerImagenAstronomica();
+/* 
+API APOD (Astronomy Picture of the Day) de la NASA es gratuita para su uso. La NASA proporciona acceso gratuito a esta API para que las personas puedan obtener la imagen astronómica del día y su descripción sin costo alguno.
+*/		
+    </script>
+</body>
+</html>

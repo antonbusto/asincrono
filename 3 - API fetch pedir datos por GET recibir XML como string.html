@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<title>3-API fetch enviar datos por GET recibir XML como string</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div id="destino"></div>
+<button class="btn btn-primary" onclick="leerXML('precios.xml')">Obtener Datos</button>
+<script>
+/* Esta función utiliza fetch para obtener el contenido de un archivo XML desde una URL y lo inserta en un elemento HTML en el documento */
+function leerXML(url) {
+  fetch(url)
+  // se encadenan dos bloques then para manejar la respuesta de la solicitud
+    .then(response => {
+	// si la respuesta no fue exitosa 
+      if (!response.ok) {
+        throw new Error('Error en la solicitud');
+      }
+	// Si la respuesta es exitosa, se llama al método text() en la respuesta para obtener el contenido del archivo XML como texto  
+      return response.text();
+    })
+	// Después de obtener el contenido del archivo XML se le asigna al DOM
+    .then(responseText => {
+      document.getElementById('destino').innerHTML = responseText;
+    })
+    .catch(error => {
+      console.error(error);
+    });
+}
+</script>
+</body>
+</html>

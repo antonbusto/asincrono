@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejemplo de conexión a la API de REST Countries</title>
+</head>
+<body>
+    <h1>Información de Países</h1>
+    <select id="select-paises"></select>
+    <div id="info-pais">
+        <h2>País Seleccionado</h2>
+        <p>Capital: <span id="capital"></span></p>
+        <p>Población: <span id="poblacion"></span></p>
+        <p>Idiomas: <span id="idiomas"></span></p>
+    </div>
+
+    <script>
+        // URL de la API de REST Countries para obtener la lista de países
+        const apiUrl = 'https://restcountries.com/v3.1/all';
+
+        // Obtener referencia a elementos HTML
+        const selectPaises = document.getElementById('select-paises');
+        const infoPais = document.getElementById('info-pais');
+        const capitalElement = document.getElementById('capital');
+        const poblacionElement = document.getElementById('poblacion');
+        const idiomasElement = document.getElementById('idiomas');
+
+        // Realizar una solicitud GET a la API para obtener la lista de países
+        fetch(apiUrl)
+            .then(response => response.json())
+            .then(data => {
+                // Ordenar los países alfabéticamente por nombre común
+                data.sort((a, b) => {
+                    const nombreA = a.name.common.toLowerCase();
+                    const nombreB = b.name.common.toLowerCase();
+                    return nombreA.localeCompare(nombreB);
+                });
+
+                // Rellenar el select con la lista de países ordenados
+                data.forEach(pais => {
+                    const option = document.createElement('option');
+                    option.value = pais.name.common;
+                    option.textContent = pais.name.common;
+                    selectPaises.appendChild(option);
+                });
+
+                // Manejar el evento cambio en el select
+                selectPaises.addEventListener('change', () => {
+                    const selectedCountry = selectPaises.value;
+                    const countryInfo = data.find(pais => pais.name.common === selectedCountry);
+
+                    // Actualizar elementos del DOM con la información del país seleccionado
+                    capitalElement.textContent = countryInfo.capital[0];
+                    poblacionElement.textContent = countryInfo.population;
+                    idiomasElement.textContent = Object.values(countryInfo.languages).join(', ');
+                });
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    </script>
+</body>
+</html>

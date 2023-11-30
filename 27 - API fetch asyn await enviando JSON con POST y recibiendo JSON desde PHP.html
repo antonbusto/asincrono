@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<title>27 - API fetch asyn await enviando JSON con POST y recibiendo JSON desde PHP</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<script>
+async function Cargar() {
+    try {
+        // en el objeto datos tenemos los datos que vamos a enviar al servidor
+        let datos = { titulo: "Precios de los productos", precios: [20,40,60] };
+        // en el objeto conf ponemos los parámetros de la petición AJAX
+        let conf = {
+            method: "POST",
+            headers: { 
+                // vamos a enviar los datos en formato JSON
+                'Content-Type': 'application/json'
+            },           
+			//body: contenido que se envía en la petición al servidor. Puede ser texto, datos de formulario, datos en formato JSON
+			 // en este ejemplo es una cadena de texto con los datos en formato JSON
+            body: JSON.stringify(datos) // convertimos el objeto a texto JSON
+        };
+        // realizamos la petición AJAX usando fetch
+        let response = await fetch('sumar.php', conf);
+        if (response.ok) {
+            // si la petición se ha resuelto correctamente, intentamos resolver otra promesa que convierta lo que nos ha respondido el servidor en un objeto de JS. Si no se puede convertir la respuesta la promesa fallará y provocará un error
+            let respuesta = await response.json();
+            // en este ejemplo, el servidor nos devuelve un objeto con dos datos, la suma de los números enviados, y texto HTML con el título y una lista con los precios
+            document.write(respuesta.html);
+			document.write("La suma de todos los productos es " + respuesta.total);
+        } else {
+		    //excepción si falla la promesa
+            throw new Error(response.statusText);
+        }
+    } catch (e) {
+        console.log("Error: " + e.message);
+    }
+};
+Cargar();
+</script>
+</body>
+</html>
+

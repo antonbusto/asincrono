@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>29 - API fetch solicitar datos a una API externa y procesar respuesta en formato JSON</title>
+<meta nombre="viewport" content="width=device-width, initial-scale=1">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">	
+</head>
+<body>
+<script>
+//la API debe permitir la petición de fetch (a veces hay que suscribirse, y no todas lo permiten desde cualquier dominio)
+//Hacer una petición a una API que ofrece listados de usuarios aleatorios para hacer prácticas
+fetch('https://randomuser.me/api/?results=10')
+.then( response => {
+if(response.status == 200) {
+//hay respuesta del servidor
+return response.text();
+} else {
+//error en la red
+throw "<p>Respuesta incorrecta del servidor</p>" 
+}
+})
+//procesar el texto de la respuesta del servidor
+.then(data => {
+//analizar y convertir en JS
+const usuarios = JSON.parse(data);
+//procesar y enviar la información recibida al destino
+console.log(usuarios.results);
+})
+.catch(e => {
+console.log(e);
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AJAX enviar datos por POST y guardar JSON en servidor utilizando PHP</title>
+</head>
+<body>
+<div id="destino"></div>
+<script>
+function crearJSON() { 
+    // creo el objeto que realizará la xhttp
+    const xhttp = new XMLHttpRequest();
+
+    // Variable con sintaxis de cadena de objeto JSON que representa la entrada de un concierto
+    let entrada = {
+        "grupo": "Loquillo",
+        "ciudad": "Madrid",
+        "precio": "30",
+		"fecha": "2022-10-15"
+    };
+	
+    // Parámetros a enviar por POST en formato JSON (JSON.stringify de JS a JSON)
+    let entrada = "concierto=" + JSON.stringify(entrada);
+	// url del archivo php que recibirá la variable y creará el archivo en el servidor
+    let url = "guardar-cadena-json-en-servidor.php";
+ 
+    // Función anónima que se ejecutará al recibir la respuesta
+    xhttp.onreadystatechange = function () {
+        // si todo fue bien
+        if (this.readyState === 4 && this.status === 200) {
+		//convierto la respuesta del servidor a JS (JSON.parse de JSON a JS) e informo de que se ha creado el archivo
+            let todoOK = JSON.parse(this.responseText);
+			document.getElementById("destino").innerHTML =
+            "Se ha creado el archivo JSON en el servidor"; 
+        }
+    } 
+    // Especificar método POST
+    xhttp.open("POST", url, true);
+	//especificar el formato Mime
+	xhttp.overrideMimeType('text/plain');
+    // Esta línea es necesaria en una peticion POST
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	// Especificar los parámetros de la petición post
+    xhttp.send(entrada); 
+}
+//Invocar la función al cargar el documento
+window.onload = crearJSON();
+</script>        
+</body>
+</html>

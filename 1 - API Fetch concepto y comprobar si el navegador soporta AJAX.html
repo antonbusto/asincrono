@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<title>1-AJAX concepto y comprobar si el navegador soporta Fecth</title>
+<meta charset="UTF-8">
+</head>
+<body>
+<script>
+<!-- AJAX (JavaScript Asincrónico y XML) es una técnica de desarrollo web que permite que los documentos web se actualicen de forma asíncrona (sin recargar completamente la página). Los documentos asincrónos precisan de un servidor web. Tradicionalmente se basaba en el objeto XMLHttpRequest. Ahora disponemos de una API Fetch que es más sencilla de utilizar. AJAX se comunica con el servidor en segundo plano y puede transportar texto sin formato, texto HTML, texto XML, o texto JSON-->
+//función para comprobar si el navegador soporta AJAX
+function comprobar() {
+  if (window.fetch) {
+    console.log("Fetch API soportada por el navegador");
+  } else {
+    console.error("Error: Este navegador no soporta Fetch API");
+  }
+}
+// Invocación
+comprobar();
+//Comprobar en la consola con F12
+</script>
+</body>
+</html>

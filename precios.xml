@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<precios>
+  <producto>
+    <nombre>Chaqueta Biker negra</nombre>
+    <material>Cuero</material>
+    <precio>150</precio>
+  </producto>
+  <producto>
+    <nombre>Chaqueta imitación Piel</nombre>
+    <material>Polipiel</material>
+    <precio>50</precio>
+  </producto>
+  <producto>
+    <nombre>Chaqueta invierno</nombre>
+    <material>Algodón</material>
+    <precio>70</precio>
+  </producto>  
+</precios>
